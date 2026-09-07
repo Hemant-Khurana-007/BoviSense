@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Herdwise · Farm health, at a glance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="[[ url_for('static', filename='css/style.css') ]]" />
+</head>
+<body>
+  <div id="app" v-cloak>
+    <aside class="sidebar" :class="{ open: navOpen }">
+      <div class="brand"><span class="brand-mark">✦</span><span>herdwise</span></div>
+      <nav>
+        <button :class="{active: page === 'dashboard'}" @click="goTo('dashboard')"><span class="nav-icon">⌂</span>Dashboard</button>
+        <button :class="{active: page === 'cows'}" @click="goTo('cows')"><span class="nav-icon">♧</span>Herd health <span class="alert-dot" v-if="attentionCount"></span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="farm-mini"><span class="farm-icon">▰</span><div><strong>Willow Farm</strong><small>North pasture</small></div><span class="chevron">⌄</span></div>
+        <button class="help"><span>?</span> Help center</button>
+      </div>
+    </aside>
+    <div class="nav-scrim" v-if="navOpen" @click="navOpen = false"></div>
+
+    <main>
+      <header class="topbar">
+        <button class="menu-toggle" @click="navOpen = true">☰</button>
+        <div class="farm-label"><span class="location-icon">⌖</span> Willow Farm <span class="down">⌄</span></div>
+        <div class="topbar-right"><span class="updated"><i></i> Synced just now</span><button class="notification">♢<b>2</b></button><div class="avatar">JM</div></div>
+      </header>
+      <div class="data-alert" v-if="loadError">{{ loadError }}</div>
+
+      <section class="page" v-if="page === 'dashboard'">
+        <div class="intro"><div><p class="eyebrow">TUESDAY, 2 SEPTEMBER</p><h1>Good morning, Jacob.</h1><p class="subcopy">Here’s how the herd is doing today.</p></div><button class="outline-button" @click="goTo('cows')">View herd health <span>→</span></button></div>
+
+        <section class="overview-grid">
+          <article class="health-card panel">
+            <div class="card-top"><div><p class="eyebrow">HERD HEALTH</p><h2>Looking good.</h2></div><span class="status-chip healthy">● All systems go</span></div>
+            <div class="health-content"><div class="donut" :style="{ '--healthy': healthyPercent + '%' }"><div><strong>{{ healthyPercent }}<sup>%</sup></strong><span>healthy</span></div></div><div class="health-stats"><div><span class="stat-marker good"></span><p><strong>{{ healthyCount }}</strong> Healthy</p><small>Within normal range</small></div><div><span class="stat-marker warning"></span><p><strong>{{ attentionCount }}</strong> Need attention</p><small>Review recommended</small></div></div></div>
+            <div class="card-foot"><span><i class="pulse"></i> Live health monitoring</span><a @click="goTo('cows')">See details <b>→</b></a></div>
+          </article>
+          <article class="weather-card panel"><div><p class="eyebrow">AT WILLOW FARM</p><div class="weather-main"><span class="sun">☼</span><strong>21°</strong></div><p class="weather-copy">Clear skies · Ideal grazing</p></div><div class="weather-meta"><span>↗ <b>23°</b> high</span><span>↘ <b>12°</b> low</span></div></article>
+        </section>
+
+        <section class="section-heading"><div><p class="eyebrow">HERD OVERVIEW</p><h2>Today’s snapshot</h2></div><button class="link-button" @click="goTo('cows')">View all cows <span>→</span></button></section>
+        <section class="metric-grid">
+          <article class="metric-card panel"><span class="metric-icon green">♡</span><div><strong>{{ totalCows }}</strong><p>Total cows</p><small>Tracked across 3 pastures</small></div></article>
+          <article class="metric-card panel"><span class="metric-icon amber">↗</span><div><strong>76<small>%</small></strong><p>Avg. activity</p><small class="positive">↑ 4% from yesterday</small></div></article>
+          <article class="metric-card panel"><span class="metric-icon blue">⌁</span><div><strong>38.5<small>°C</small></strong><p>Avg. body temp</p><small>Normal range: 38–39.3°C</small></div></article>
+          <article class="metric-card panel"><span class="metric-icon lavender">◉</span><div><strong>98<small>%</small></strong><p>Sensor uptime</p><small>All devices connected</small></div></article>
+        </section>
+
+        <section class="lower-grid"><article class="activity-panel panel"><div class="panel-title"><div><p class="eyebrow">RECENT ACTIVITY</p><h2>Herd updates</h2></div><button class="dots">•••</button></div><div class="activity-list"><div class="activity-row"><span class="event-icon positive-bg">✓</span><div><strong>Daisy completed her health check</strong><p>All readings are within normal range</p></div><time>2 min ago</time></div><div class="activity-row"><span class="event-icon orange-bg">!</span><div><strong>Clover needs a closer look</strong><p>Elevated body temperature detected</p></div><time>8 min ago</time></div><div class="activity-row"><span class="event-icon blue-bg">⌖</span><div><strong>Herd moved to North Pasture</strong><p>GPS location updated for 18 cows</p></div><time>1 hr ago</time></div></div></article><article class="attention-panel"><div><p class="eyebrow">QUICK ACTION</p><h2>2 cows need your attention.</h2><p>Review their latest health readings to make sure they’re comfortable.</p><button @click="goTo('cows', true)">Review cows <span>→</span></button></div><span class="cow-line-art">♧</span></article></section>
+      </section>
+
+      <section class="page herd-page" v-else>
+        <div class="intro herd-intro"><div><p class="eyebrow">HERD HEALTH</p><h1>Every cow, in view.</h1><p class="subcopy">Monitor health signals and check in on the herd.</p></div><div class="health-summary"><span class="stat-marker good"></span><strong>{{ healthyCount }} healthy</strong><span class="divider"></span><span class="stat-marker warning"></span><strong>{{ attentionCount }} to review</strong></div></div>
+        <div class="herd-toolbar"><div class="search"><span>⌕</span><input v-model="search" placeholder="Search cow or tag" /></div><div class="filter-group"><button v-for="filter in filters" :key="filter" :class="{selected: selectedFilter === filter}" @click="selectedFilter = filter">{{ filter }}</button></div></div>
+        <div class="cow-grid"><article class="cow-card panel" v-for="cow in filteredCows" :key="cow.id"><div class="cow-image-wrap"><img :src="cow.image" :alt="cow.name + ', ' + cow.breed" /><span class="health-badge" :class="healthClass(cow.health)"><i></i>{{ cow.health }}</span><button class="more-cow" @click="selectCow(cow)">⋮</button></div><div class="cow-info"><div><p class="cow-id">{{ cow.id }} · {{ cow.tag }}</p><h2>{{ cow.name }}</h2><p class="breed">{{ cow.breed }}</p></div><button class="details-button" @click="selectCow(cow)">Detailed parameters <span>→</span></button></div></article></div>
+        <div class="empty-state" v-if="!filteredCows.length"><span>⌕</span><h2>No cows found</h2><p>Try a different name, tag, or health filter.</p></div>
+      </section>
+    </main>
+
+    <transition name="fade"><div class="modal-backdrop" v-if="selectedCow" @click.self="selectedCow = null"><article class="detail-modal"><button class="close" @click="selectedCow = null">×</button><div class="detail-hero"><img :src="selectedCow.image" :alt="selectedCow.name" /><div><p class="eyebrow">{{ selectedCow.id }} · {{ selectedCow.tag }}</p><h2>{{ selectedCow.name }}</h2><p>{{ selectedCow.breed }}</p><span class="health-badge modal-badge" :class="healthClass(selectedCow.health)"><i></i>{{ selectedCow.health }}</span></div></div><div class="detail-head"><div><p class="eyebrow">LATEST SENSOR READINGS</p><h3>Detailed parameters</h3></div><small>Updated {{ selectedCow.last_checked }}</small></div><div class="parameter-grid"><div class="parameter" v-for="(value, label) in readableParameters(selectedCow.parameters)" :key="label"><span class="parameter-label">{{ label }}</span><strong>{{ value }}</strong></div></div><div class="location-strip"><span>⌖</span><div><small>Last known location</small><strong>{{ selectedCow.parameters.gps_coordinates }}</strong></div><button>Open map ↗</button></div></article></div></transition>
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="[[ url_for('static', filename='js/app.js') ]]"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="t d">
+  <title id="t">Dairy cow in a pasture</title><desc id="d">A friendly black and white dairy cow standing in a green pasture.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b8dbd2"/><stop offset="1" stop-color="#f2f5dc"/></linearGradient>
+    <linearGradient id="field" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a5ca8d"/><stop offset="1" stop-color="#4c8057"/></linearGradient>
+    <linearGradient id="fur" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fffdf6"/><stop offset="1" stop-color="#e8e1d6"/></linearGradient>
+    <filter id="s"><feGaussianBlur in="SourceAlpha" stdDeviation="8"/><feOffset dy="9"/><feComponentTransfer><feFuncA type="linear" slope=".2"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="900" height="600" fill="url(#sky)"/><circle cx="737" cy="104" r="54" fill="#fff0a5"/>
+  <path d="M0 300C168 250 293 287 442 245s282 27 458-27v382H0Z" fill="#88b979" opacity=".7"/><path d="M0 365c160-56 293 4 444-39s301 19 456-43v317H0Z" fill="url(#field)"/>
+  <path d="M17 440c157-60 312 10 459-34s258-8 395-60M79 523c159-49 307 4 445-42s253-7 363-56" fill="none" stroke="#d7efc5" stroke-width="8" opacity=".6"/>
+  <g filter="url(#s)">
+    <ellipse cx="456" cy="513" rx="263" ry="35" fill="#294b36" opacity=".3"/>
+    <path d="M273 379c0-101 79-163 197-163 121 0 201 54 201 149 0 74-50 124-176 124H345c-43 0-72-39-72-110Z" fill="url(#fur)"/>
+    <path d="M322 285c34-44 84-69 145-69 23 0 46 3 66 9-46 35-68 79-66 145-6 55-40 91-96 110h-26c-43 0-72-39-72-110 0-31 9-60 24-85Z" fill="#21483a"/>
+    <path d="M509 228c31 9 56 25 79 48-22 20-32 47-31 79-34-10-58-33-63-60-5-27 1-50 15-67Z" fill="#254a3c"/>
+    <path d="M600 274c48 12 78 46 78 87 0 48-34 81-86 81-55 0-84-33-84-78 0-52 37-90 92-89Z" fill="url(#fur)"/>
+    <path d="M605 289c30 4 52 16 64 37-19 12-27 35-22 60-33 13-58-8-62-38-4-25 3-47 20-59Z" fill="#21483a"/>
+    <path d="M353 435h47l-10 99c-1 15-12 22-28 22h-13Zm83 8h42l4 91c1 15-10 22-25 22h-13Zm69-10h46l-6 101c-1 15-12 22-27 22h-13Zm65 0h44l14 101c2 15-8 22-23 22h-14Z" fill="#f8f2e6"/>
+    <path d="M353 526h35v22h-43c-4-10-1-17 8-22Zm88 0h35v22h-43c-4-10-1-17 8-22Zm66 0h35v22h-43c-4-10-1-17 8-22Zm89 0h35l8 22h-43c-6-8-6-15 0-22Z" fill="#293b33"/>
+    <path d="M597 278c18-30 42-44 70-41-8 21-23 37-44 48Z" fill="#d9b58e"/><path d="M620 274c0-24 10-44 27-58 6 19 3 39-8 58Z" fill="#f2dfc1"/>
+    <circle cx="641" cy="320" r="7" fill="#21382f"/><ellipse cx="635" cy="365" rx="32" ry="22" fill="#efb5a2"/><ellipse cx="622" cy="360" rx="5" ry="6" fill="#a46860"/><ellipse cx="649" cy="360" rx="5" ry="6" fill="#a46860"/>
+    <path d="M672 391c34 8 62 35 64 75" fill="none" stroke="#263d32" stroke-width="9" stroke-linecap="round"/><path d="M741 466c-11-4-14-13-8-22 8 2 13 10 8 22Z" fill="#efb5a2"/>
+  </g>
+</svg>
