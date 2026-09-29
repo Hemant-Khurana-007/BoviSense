@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: BoviSense
+    name: bovisense
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt
